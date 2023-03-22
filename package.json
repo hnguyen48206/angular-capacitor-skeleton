@@ -4,13 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o --host 0.0.0.0",
-    "build": "ng build --prod && npx cap sync",
+    "build": "ng build --configuration production && npx cap sync",
     "open:android": "npx cap open android",
     "open:ios": "npx cap open ios",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "copy":"npx cap copy",
-    "sync":"npx cap sync"
+    "copy": "npx cap copy",
+    "sync": "npx cap sync",
+    "icon": "cordova-res android -skip-config -copy"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +26,7 @@
     "@capacitor/android": "^4.7.1",
     "@capacitor/core": "^4.7.1",
     "@capacitor/ios": "^4.7.1",
+    "@capacitor/splash-screen": "^4.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
