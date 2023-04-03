@@ -12,7 +12,7 @@ dependencies {
     implementation project(':capacitor-splash-screen')
 
 }
-
+apply from: "../../node_modules/cordova-plugin-ffmpeg/src/android/mobile-ffmpeg-x2.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

@@ -1,0 +1,36 @@
+<div class="loginBody">
+    <div class="loginBackgroundPicture"></div>
+    <div class="loginForm">
+      <div *ngIf="!isOTPShow" id="loginFormContent">
+        <img id="loginFormContentHeaderImg"
+          src="https://1.bp.blogspot.com/-PKKbVJnT3HM/YLO8Wl3N6sI/AAAAAAAAANE/jMkd7M72r10JGYDeBba5OjAxjcTx9TMFQCLcBGAsYHQ/s16000/career-in-technology-feature.png" />
+        <h1>ĐĂNG NHẬP</h1>
+        <p>
+          Chào mừng đến với hệ thống ivms, xin vui lòng đăng nhập tài khoản
+          trước khi sử dụng.
+        </p>
+        <input [(ngModel)]="username" type="text" id="username" name="username" placeholder="Tên đăng nhập" />
+        <small *ngIf="inputValidatingMessage.usernameError">Username không được để trống và cần có độ dài từ 3-20 ký
+          tự</small>
+        <input [(ngModel)]="password" type="password" id="password" name="password" placeholder="Mật khẩu" />
+        <small *ngIf="inputValidatingMessage.passwordError">Password không được để trống và cần có độ dài từ 3-20 ký
+          tự</small>
+        <button (click)="login()" id="loginFormSubmitBtn">Đăng Nhập</button>
+        <a (click)="forgetPassword()" id="forgetPasswordTxt">
+          (*) <u>Quên mật khẩu?</u>
+        </a>
+      </div>
+      <div *ngIf="isOTPShow" id="loginFormContent">
+        <h4 style="margin-bottom: 2em">
+          Vui lòng nhập mã OTP nhận được qua số điện thoại của bạn. Mã sẽ hết
+          hiệu lưc sau 5 phút.
+        </h4>
+        <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{ length: 6 }"></ng-otp-input>
+        <div id="otpButtonRows">
+          <button (click)="otpCancel()" id="otpCancelBtn">Hủy</button>
+          <button (click)="verifyOTP()" id="otpVerifyBtn">Xác Thực</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

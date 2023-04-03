@@ -1,0 +1,140 @@
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #bbbaba;
+  }
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #bbbaba;
+  }
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    color: #bbbaba;
+  }
+  :-moz-placeholder {
+    /* Firefox 18- */
+    color: #bbbaba;
+  }
+  .layout {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .loginBody {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .loginBackgroundPicture {
+    height: 30vh;
+    width: 100vw;
+    background-image: url('/assets/images/background-login.jpg');
+    background-size: cover;
+  }
+  .loginForm {
+    background-color: white;
+    height: 80vh;
+    width: 100vw;
+    padding: 4em;
+    display: flex;
+    flex-direction: column;
+  }
+  .loginForm h1 {
+    color: black;
+  }
+  .loginForm p {
+    color: #9b9a9a;
+  }
+  .loginForm #loginFormContentHeaderImg {
+    margin-right: 15%;
+    margin-left: 15%;
+    width: 70%;
+    padding-bottom: 1.5em;
+  }
+  .loginForm input {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    line-height: 4em;
+    padding-left: 10px;
+    width: 100%;
+    border-radius: 0.5em;
+    border: 1px solid;
+    border-color: #e0e0e0;
+    outline-color: #ffc74e !important;
+  }
+  .loginForm #loginFormSubmitBtn {
+    margin-top: 0.5em;
+    margin-bottom: 1.5em;
+    display: block;
+    height: 3.5em;
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    background: #ff2020;
+    border: 0px;
+    border-radius: 5em;
+    outline: none;
+  }
+  .loginForm #forgetPasswordTxt {
+    margin-top: 1em;
+    color: #7b7979;
+    cursor: pointer;
+  }
+  .loginForm small {
+    color: #ff9f05;
+  }
+  .loginForm #otpButtonRows {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+  }
+  .loginForm #otpCancelBtn {
+    margin-left: 0;
+    margin-right: 5%;
+    width: 45%;
+    height: 100%;
+    color: white;
+    font-weight: bold;
+    background: #ff2020;
+    border: 0px;
+    border-radius: 5em;
+    outline: none;
+  }
+  .loginForm #otpVerifyBtn {
+    margin-right: 5%;
+    margin: auto;
+    width: 45%;
+    height: 100%;
+    color: white;
+    font-weight: bold;
+    background: #ffc758;
+    border: 0px;
+    border-radius: 5em;
+    outline: none;
+  }
+  @media only screen and (min-width: 768px) {
+    .loginBody {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+    }
+    .loginBackgroundPicture {
+      width: 50vw;
+      height: 100vh;
+      background-position: center;
+    }
+    .loginForm {
+      width: 50vw;
+      height: 100vh;
+      padding: 5em;
+    }
+    .loginForm #loginFormContent {
+      max-width: 70%;
+      margin: auto;
+    }
+  }
+  
