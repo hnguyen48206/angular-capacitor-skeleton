@@ -1,9 +1,12 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { sha256 } from 'js-sha256';
 import { ApiservicesService } from 'src/app/services/api.service';
 declare var cordova:any;
 declare var ffmpeg:any;
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'ngx-login-page',
@@ -11,6 +14,10 @@ declare var ffmpeg:any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  logContent="";
+  isFirstFrameRecieved = false;
+  frameSrc=null;
+  framePlaceholder="https://1.bp.blogspot.com/-PKKbVJnT3HM/YLO8Wl3N6sI/AAAAAAAAANE/jMkd7M72r10JGYDeBba5OjAxjcTx9TMFQCLcBGAsYHQ/s16000/career-in-technology-feature.png";
   isOTPShow=false;
   username = '';
   password = ''
@@ -21,8 +28,20 @@ export class LoginComponent implements OnInit {
   loading = false;
   otpInput=''
 
-  constructor(private router: Router, private apiService: ApiservicesService) { }
-
+  constructor(private zone: NgZone, public sanitizer: DomSanitizer, private router: Router, private apiService: ApiservicesService) { }
+ 
+  getImagePlaceholder(source:any, type:any)
+  {
+    console.log('img error ----------------------------------------------')
+    switch (type) {
+      case 'url':
+        this.frameSrc = <any>this.sanitizer.bypassSecurityTrustUrl(source); break;
+      case 'resource':
+        this.frameSrc = <any>this.sanitizer.bypassSecurityTrustResourceUrl(source);  break;  
+      default:
+        break;
+    }
+  }
   ngOnInit(): void {
     if (this.apiService.isLogin)
       this.router.navigate(['/home'])
@@ -146,9 +165,51 @@ export class LoginComponent implements OnInit {
   }
   ngAfterViewInit()
   {
-    console.log(ffmpeg);
-    let outputPath = `storage/emulated/0/ffmpegtest.jpg`
-    let cmd = `-loglevel debug -i rtsp://yq1:abcd$1234@14.241.248.157:1554/unicast/c43/s0/live -r 24 -vf mpdecimate,setpts=N/FRAME_RATE/TB -vsync 0 -q:v 3 -f image2 -update 1 ${outputPath}`
-    ffmpeg.exec(cmd, (success:any) => console.log(success), (failure:any) => console.log(failure));
+    // console.log(ffmpeg);
+   this.ffmpegTest();
+  }
+
+  async ffmpegTest()
+  {
+    let outputPath = 'storage/emulated/0/' + Directory.Documents + `/testffmpeg/ffmpegtest.jpg`
+    console.log(outputPath)
+    let cmd = `-loglevel debug -i rtsp://yq1:abcd$1234@14.241.248.157:1554/unicast/c43/s0/live -y -r 24 -vsync 0 -q:v 3 -f image2 -update 1 ${outputPath}`
+
+    await Filesystem.requestPermissions();
+    try {
+      let res = await Filesystem.mkdir({
+        path: 'testffmpeg',
+        directory: Directory.Documents,
+        recursive: false,
+      });
+      console.log("folder ", res);
+    } catch (e) {
+      console.error("Unable to make directory", e);
+    }
+  
+    try {
+      let self=this;
+      ffmpeg.exec(cmd,
+        (success:any) => {
+          console.log(success);
+          self.zone.run(() => {
+            self.logContent = self.logContent + `\n` + success;
+            if(success.startsWith('frame'))
+            {
+              if(!this.isFirstFrameRecieved)
+              {
+                this.isFirstFrameRecieved=true;
+              }
+              let fileSrc = Capacitor.convertFileSrc('file:///' + outputPath + "?t=" + new Date().getTime());
+              console.log('File src' , fileSrc)
+              self.frameSrc = <any>this.sanitizer.bypassSecurityTrustResourceUrl(fileSrc);
+            }
+          });
+
+        }
+        ,(failure:any) => console.log(failure));
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

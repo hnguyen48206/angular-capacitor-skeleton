@@ -1,4 +1,4 @@
-<div class="loginBody">
+<!-- <div class="loginBody">
     <div class="loginBackgroundPicture"></div>
     <div class="loginForm">
       <div *ngIf="!isOTPShow" id="loginFormContent">
@@ -32,5 +32,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <img [src]="frameSrc" (error)="getImagePlaceholder(framePlaceholder, 'url')" width="100%"/>
+  <br>
+  <p style="height:50vh; width: 100vw; overflow:auto">
+    {{logContent}}
+  </p>
 
