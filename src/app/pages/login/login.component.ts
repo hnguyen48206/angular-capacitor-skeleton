@@ -173,8 +173,9 @@ export class LoginComponent implements OnInit {
   {
     let outputPath = 'storage/emulated/0/' + Directory.Documents + `/testffmpeg/ffmpegtest.jpg`
     console.log(outputPath)
-    let inputStream = 'rtsp://yq1:abcd$1234@14.241.248.157:1554/unicast/c43/s0/live'
+    let inputStream = 'rtsp://1cua:1Cuatunghia@113.160.245.246:554/cam/realmonitor?channel=1&subtype=0'
     let cmd = `-loglevel debug -i ${inputStream} -y -r 24 -vsync 0 -q:v 3 -f image2 -update 1 ${outputPath}`
+    // let cmd = `-loglevel debug -i ${inputStream} -y -r 24 -vsync 0 -q:v 3 -f image2 -update 1 -`
 
     await Filesystem.requestPermissions();
     try {
