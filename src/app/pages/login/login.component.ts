@@ -172,11 +172,14 @@ export class LoginComponent implements OnInit {
   async ffmpegTest()
   {
     let outputPath = 'storage/emulated/0/' + Directory.Documents + `/testffmpeg/ffmpegtest.jpg`
+    // let outputPath = 'storage/emulated/0/' + Directory.Documents + `/testffmpeg/ffmpegtest.webp`
     console.log(outputPath)
     let inputStream = 'rtsp://1cua:1Cuatunghia@113.160.245.246:554/cam/realmonitor?channel=1&subtype=0'
-    let cmd = `-loglevel debug -i ${inputStream} -y -r 24 -vsync 0 -q:v 3 -f image2 -update 1 ${outputPath}`
+    // let cmd = `-loglevel debug -i ${inputStream} -y -r 24 -vsync 0 -q:v 3 -f image2 -update 1 ${outputPath}`
     // let cmd = `-loglevel debug -i ${inputStream} -y -r 24 -vsync 0 -q:v 3 -f image2 -update 1 -`
 
+    // Using webp for smaller file size anf also -q:v (range from 1 to 30) 15 to reduce quality to 50% + 720p resolution
+    let cmd = `-loglevel debug -fflags nobuffer -flags low_delay -rtsp_transport tcp -i ${inputStream} -vframes 1 -update 1 -vsync 0 -q:v 15 -vf scale=-1:720 ${outputPath}`
     await Filesystem.requestPermissions();
     try {
       let res = await Filesystem.mkdir({
